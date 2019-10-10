@@ -65,7 +65,45 @@
   --global-input-focus-borderColor: var(--global-color-alpha);
   --global-input-focus-boxShadow: 0 0 0 3px
     var(--global-color-alpha-x-transparent);
+
+    /* page colors */
+  --global-page-color: var(--global-color-neutral-xxxx-dark);
+  --global-page-backgroundColor: var(--global-color-neutral-xxxx-light);
+  --global-c-card-backgroundColor: white;
+
+  /*label*/
+  --global-color-label: var(--global-color-neutral-xx-dark);
+
+  /*footer line*/
+  --global-color-footer-line: var(--global-color-neutral-xxx-light);
 }
+
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+      --global-page-color: White;
+      --global-page-backgroundColor: var(--global-color-neutral-xxxx-dark);
+      --global-c-card-backgroundColor: var(--global-color-neutral-xxx-dark);
+
+      
+      /*input*/
+      --global-input-backgroundColor: var(--global-color-neutral-xxxx-dark);
+      --global-input-color: var(--global-color-neutral-dark);
+      --global-input-borderColor: var(--global-color-neutral-xxxx-dark);
+
+      /*label*/
+      --global-color-label: var(--global-color-neutral-x-light);
+
+      /*footer line*/
+      --global-color-footer-line: var(--global-color-neutral-xxxx-dark);
+
+      /*input styles*/
+      --global-input-focus-borderColor: var(--global-color-alpha);
+      --global-input-focus-boxShadow: 0 0 0 3px #3385ffBF;
+  }
+}
+
 
 /*------------------------------------*\
 #GENERIC
@@ -81,12 +119,18 @@ html {
   font-size: 16px;
   line-height: 1.5;
   font-family: "Inter Web", Helvetica, arial, sans-serif;
-  color: var(--global-color-neutral-xxxx-dark);
-  background-color: var(--global-color-neutral-xxxx-light);
+  color: var(--global-page-color);
+  background-color:  var(--global-page-backgroundColor);
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* 
+@media (prefers-color-scheme: dark) {
+  html {
+      background-color: var(--color-neutral-xxxx-dark);
+  }
+} */
 
 *,
 *:before,
@@ -237,7 +281,7 @@ input {
 }
 
 input::placeholder {
-  color: var(--global-color-neutral-x-light);
+  color: var(--global-input-color);
 }
 
 /*------------------------------------*\
@@ -522,7 +566,7 @@ input::placeholder {
   height: 100%;
 }
 
-.c-logo__path--1 {
+/* .c-logo__path--1 {
   fill: var(--global-color-neutral-xxxx-dark);
 }
 
@@ -532,6 +576,26 @@ input::placeholder {
 
 .c-logo__path--3 {
   fill: var(--color-alpha-x-dark);
+} */
+
+.c-logo__path--1 {
+  fill: var(--logo__path--1--fill, var(--global-color-neutral-xxxx-dark));
+}
+
+.c-logo__path--2 {
+  fill: var(--logo__path--2--fill, var(--global-color-alpha));
+}
+
+.c-logo__path--3 {
+  fill: var(--logo__path--3--fill, var(--global-color-alpha-x-dark));
+}
+
+@media (prefers-color-scheme: dark) {
+  .c-logo {
+    --logo__path--1--fill: White;
+    --logo__path--2--fill: var(--logo__path--1--fill);
+    --logo__path--3--fill: var(--logo__path--1--fill);
+  }
 }
 
 /*
@@ -541,7 +605,7 @@ input::placeholder {
 */
 
 .c-card {
-  background-color: White;
+  background-color: var(--global-c-card-backgroundColor);
   margin-bottom: var(--global-whitespace);
   border-radius: var(--global-borderRadius);
   box-shadow: 0 0 0 var(--global-borderWidth) rgba(0, 0, 0, 0.05),
@@ -558,7 +622,7 @@ input::placeholder {
 .c-card__footer {
   text-align: center;
   border-top: var(--global-borderWidth) solid
-    var(--global-color-neutral-xxx-light);
+    var(--global-color-footer-line);
 }
 
 .c-card__title {
@@ -615,7 +679,7 @@ input::placeholder {
   width: 100%;
   border: var(--global-borderWidth) solid var(--global-input-borderColor);
   border-radius: var(--global-borderRadius);
-  color: var(--global-color-neutral-xxxx-dark);
+  color: var(--global-input-color);
   background-color: var(--global-input-backgroundColor);
   font-family: inherit;
   font-size: 16px;
@@ -653,7 +717,7 @@ input::placeholder {
   font-size: 14px;
   padding-bottom: var(--global-whitespace-xs);
   line-height: calc(var(--global-baseline) * 2);
-  color: var(--global-color-neutral-xx-dark);
+  color: var(--global-color-label);
 }
 
 .c-label--option {
@@ -783,13 +847,108 @@ input::placeholder {
   width: 48px;
   height: 24px;
   margin-right: 16px;
-  background-color: var(--toggle-backgroundColor);
+  background-color: white;
   border-radius: 32px;
-  border: 1px solid;
+  border: var(--global-borderWidth) solid var(--global-input-borderColor);
+  border-color: var(--global-color-neutral-xxx-light);
 }
 
-.c-toggle-list
+.c-custom-toggle__fake-input::after {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin-right: 16px;
+  background-color: white;
+  border-radius: 22px;
+  border: none;
+  content: "";
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-out;
+}
 
+/* .c-custom-toggle__fake-input:checked {
+  display: block;
+  width: 48px;
+  height: 24px;
+  margin-right: 16px;
+  background-color: white;
+  border-radius: 32px;
+  border: 1px solid;
+  border-color: var(--global-color-alpha-dark);
+  box-shadow: var(--global-input-focus-boxShadow);
+} */
+
+.c-option--hidden:checked
+  + .c-custom-toggle
+  .c-custom-toggle__fake-input::after {
+  transform: translateX(24px);
+  transition: all 0.2s ease-out;
+}
+
+.c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input {
+  background-color: var(--global-color-alpha);
+  border-color: var(--global-color-alpha-dark);
+}
+
+/* .c-option--hidden:focus + .c-custom-toggle .c-custom-toggle__fake-input::after {
+  border-color: var(--global-input-focus-borderColor); 
+  box-shadow: var(--global-input-focus-boxShadow);
+} */
+
+.c-option--hidden:focus + .c-custom-toggle .c-custom-toggle__fake-input {
+  /* border-color: var(--global-input-focus-borderColor); */
+  box-shadow: var(--global-input-focus-boxShadow);
+}
+
+.c-option--hidden:active
+  + .c-custom-toggle
+  .c-custom-toggle__fake-input::after {
+  width: 28px;
+}
+
+.c-option--hidden:active:checked
+  + .c-custom-toggle
+  .c-custom-toggle__fake-input::after {
+  margin-left: -6px;
+}
+
+.c-toggle-list__item {
+  padding-top: calc(var(--global-baseline) * 1.5);
+  padding-bottom: calc(var(--global-baseline) * 1.5);
+}
+
+.c-toggle-list__item + .c-toggle-list__item {
+  border-top: var(--global-borderWidth) solid
+    var(--global-color-neutral-xxx-light);
+}
+
+.c-custom-toggle--inverted {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.c-costum-select {
+  display: block;
+  position: relative;
+}
+
+.c-custom-select__input {
+  position: relative;
+  width: 100%;
+  border: var(--global-borderWidth) solid var(--global-input-borderColor);
+}
+
+.c-custom-select__symbol {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  fill: var(--global-color-neutral-x-light);
+}
 /*------------------------------------*\
 #UTILITIES
 \*------------------------------------*/
